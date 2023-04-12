@@ -1,0 +1,5 @@
+﻿
+
+###
+GET {{baseUrl}}/odata/deals?
+    $count=true

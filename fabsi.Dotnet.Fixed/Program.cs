@@ -1,19 +1,24 @@
 ﻿
+using fabsi.Dotnet.Fixed;
+
 var main = new Main();
 
 main.AllocateStaticMemory();
 
-class Main
+namespace fabsi.Dotnet.Fixed
 {
-    public unsafe void AllocateStaticMemory()
+    class Main
     {
-        fixed (char* example = "Hello World")
+        public unsafe void AllocateStaticMemory()
         {
-            char* ptr = example;
-            while (*ptr != '\0')
+            fixed (char* example = "Hello World")
             {
-                Console.WriteLine($"Next char :: {*ptr}");
-                ptr++;
+                char* ptr = example;
+                while (*ptr != '\0')
+                {
+                    Console.WriteLine($"Next char :: {*ptr}");
+                    ptr++;
+                }
             }
         }
     }

@@ -1,7 +1,12 @@
 ﻿
+using fabsi.Dotnet.Linq;
+
 var main = new Main();
 
-class Main
+namespace fabsi.Dotnet.Linq
 {
+    class Main
+    {
 
+    }
 }

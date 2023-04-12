@@ -1,4 +1,5 @@
 ﻿
+using fabsi.Dotnet.Extern;
 using System.Runtime.InteropServices;
 
 var main = new Main();
@@ -7,18 +8,21 @@ var task = main.OpenDialogAsync();
 Console.WriteLine($"After");
 await task;
 
-class Main
+namespace fabsi.Dotnet.Extern
 {
-    [DllImport("User32.dll")]
-    public static extern int MessageBox(int h, string m, string c, int type);
-
-    public Task OpenDialogAsync(CancellationToken ct = default)
+    class Main
     {
-        return Task.Run(() =>
+        [DllImport("User32.dll")]
+        public static extern int MessageBox(int h, string m, string c, int type);
+
+        public Task OpenDialogAsync(CancellationToken ct = default)
         {
-            Console.WriteLine($"{nameof(OpenDialogAsync)} :: Start");
-            int res = MessageBox(0, "Hello World", "Hello World 2", 0);
-            Console.WriteLine($"{nameof(OpenDialogAsync)} :: End");
-        }, ct);
+            return Task.Run(() =>
+            {
+                Console.WriteLine($"{nameof(OpenDialogAsync)} :: Start");
+                int res = MessageBox(0, "Hello World", "Hello World 2", 0);
+                Console.WriteLine($"{nameof(OpenDialogAsync)} :: End");
+            }, ct);
+        }
     }
 }

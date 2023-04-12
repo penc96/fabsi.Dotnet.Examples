@@ -1,4 +1,6 @@
 ﻿
+using fabsi.Dotnet.Using;
+
 try
 {
     using var res = new CriticalResource();
@@ -9,20 +11,23 @@ catch (Exception e)
     Console.WriteLine($"An error occured :: {e.Message}");
 }
 
-class CriticalResource : IDisposable
+namespace fabsi.Dotnet.Using
 {
-    public CriticalResource()
+    class CriticalResource : IDisposable
     {
-        Console.WriteLine($"{nameof(CriticalResource)} :: Constructor");
-    }
+        public CriticalResource()
+        {
+            Console.WriteLine($"{nameof(CriticalResource)} :: Constructor");
+        }
 
-    public void Explode()
-    {
-        throw new Exception("BOOOOM");
-    }
+        public void Explode()
+        {
+            throw new Exception("BOOOOM");
+        }
 
-    public void Dispose()
-    {
-        Console.WriteLine($"{nameof(CriticalResource)} :: Dispose");
+        public void Dispose()
+        {
+            Console.WriteLine($"{nameof(CriticalResource)} :: Dispose");
+        }
     }
 }

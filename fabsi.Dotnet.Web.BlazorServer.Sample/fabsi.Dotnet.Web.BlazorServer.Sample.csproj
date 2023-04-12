@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>fabsi.Dotnet.UI.Blazor.Server.Sample</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Core\Models" />
+      <Folder Include="Core\Pages" />
+      <Folder Include="Employees\Pages" />
+      <Folder Include="Shared\Elements" />
+      <Folder Include="Shared\Pages" />
+      <Folder Include="Wol\Models" />
+      <Folder Include="Wol\Pages" />
+      <Folder Include="Wol\Services" />
+    </ItemGroup>
+
+</Project>

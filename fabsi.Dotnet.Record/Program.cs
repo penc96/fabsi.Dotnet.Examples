@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using fabsi.Dotnet.Record;
+using System.Runtime.InteropServices;
 
 var dealRecord = new DealDtoRecord(
     Id: 1,
@@ -26,35 +27,38 @@ var dealClass = new DealDtoClass
 Console.WriteLine($"Record deal size '{ Marshal.SizeOf<DealDtoRecord>() }'");
 Console.WriteLine($"Class deal size '{ Marshal.SizeOf<DealDtoClass>() }'");
 
-public record DealDtoRecord(
-    int Id,
-    string FullName,
-    string ProductName,
-    double? BasePrice,
-    double DealPrice,
-    DateTime From,
-    DateTime To,
-    DateTime Created
-);
-
-[StructLayout(LayoutKind.Sequential)]
-public class DealDtoClass
+namespace fabsi.Dotnet.Record
 {
-    public int Id { get; set; }
-    public string FullName { get; set; }
-    public string ProductName { get; set; }
-    public double? BasePrice { get; set; }
-    public double DealPrice { get; set; }
-    public DateTime From { get; set; }
-    public DateTime To { get; set; }
-    public DateTime Created { get; set; }
-}
+    public record DealDtoRecord(
+        int Id,
+        string FullName,
+        string ProductName,
+        double? BasePrice,
+        double DealPrice,
+        DateTime From,
+        DateTime To,
+        DateTime Created
+    );
 
-public static class UnmanagedSizeofHelper
-{
-    public static unsafe int SizeofType<TType>()
-        where TType : unmanaged
+    [StructLayout(LayoutKind.Sequential)]
+    public class DealDtoClass
     {
-        return sizeof(TType);
+        public int Id { get; set; }
+        public string FullName { get; set; }
+        public string ProductName { get; set; }
+        public double? BasePrice { get; set; }
+        public double DealPrice { get; set; }
+        public DateTime From { get; set; }
+        public DateTime To { get; set; }
+        public DateTime Created { get; set; }
+    }
+
+    public static class UnmanagedSizeofHelper
+    {
+        public static unsafe int SizeofType<TType>()
+            where TType : unmanaged
+        {
+            return sizeof(TType);
+        }
     }
 }

@@ -1,0 +1,29 @@
+﻿@using fabsi.Dotnet.UI.Blazor.Server.Sample.Models
+
+<input type="text" name="name" style="@Color" @bind-value="Value" @bind-value:event="oninput"/>
+<label for="name">@Field.Name</label>
+
+@code {
+    [Parameter]
+    public FormFieldModel Field { get; set; } = null!;
+
+    public bool IsValid { get; set; }
+    public string Color { get; set; } = string.Empty;
+    private string _value = string.Empty;
+    public string Value
+    {
+        get => _value;
+        set
+        {
+            _value = value;
+            IsValid = Field.Validate(value);
+            Color = IsValid ? "border-color: green" : "border-color: red";
+        }
+    }
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+}

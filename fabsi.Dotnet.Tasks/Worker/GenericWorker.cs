@@ -10,13 +10,47 @@ public class GenericWorker : WorkerBase
         WaitTime = waitTime;
     }
 
-    public async Task DoWorkAsync()
+    public Task DoWorkAsync()
     {
-        for (int i = 0; i < WaitTime; i++)
+        return Task.Run(() =>
         {
-            if (i % 100 == 0)
-                LogProcessInfo();
-            await Task.Delay(1);
+            int x = 0;
+            while (x < 1000000)
+            {
+                // TODO: do long stuff
+                Console.WriteLine(x);
+                x++;
+            }
+        });
+        // for (int i = 0; i < WaitTime; i++)
+        // {
+        //     if (i % 100 == 0)
+        //         LogProcessInfo();
+        //     await Task.Delay(1);
+        // }
+    }
+
+    private async Task Example1()
+    {
+        int x = 0;
+        while (x < 2)
+        {
+            // TODO: do long stuff
+            Console.WriteLine(x);
+            x++;
+            await Task.Delay(1000);
+        }
+    }
+
+    private async Task Example2()
+    {
+        int x = 0;
+        while (x < 2)
+        {
+            // TODO: do long stuff
+            Console.WriteLine(x);
+            x++;
+            await Task.Delay(1000);
         }
     }
 }
