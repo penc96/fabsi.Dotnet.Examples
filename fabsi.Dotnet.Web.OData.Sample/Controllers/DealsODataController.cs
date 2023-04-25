@@ -5,6 +5,7 @@ using fabsi.Dotnet.Web.OData.Sample.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Extensions;
 using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Attributes;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OData.ModelBuilder;
@@ -12,10 +13,10 @@ using Newtonsoft.Json;
 
 namespace fabsi.Dotnet.Web.OData.Sample.Controllers;
 
-[Route($"odata/deals")]
-public class DealsODataController : ControllerBase
+[ODataRouteComponent()]
+public class DealsODataController : ODataController
 {
-    [HttpGet]
+    [HttpGet("/api/deals/odata/edmeverytime")]
     public async Task<ActionResult<ODataResultDto<DealDto, DealEntity>>> GetByODataAsync(
         [FromServices] IMapper mapper,
         [FromServices] ODataSampleDbContext oDataSampleDbContext,
@@ -24,6 +25,16 @@ public class DealsODataController : ControllerBase
         var dealsSet = oDataSampleDbContext.Set<DealEntity>()
             .Include(x => x.Market);
         return Ok(new ODataResultDto<DealDto, DealEntity>(mapper, Request, dealsSet));
+    }
+
+    [EnableQuery]
+    [HttpGet("/api/odata/deals/once")]
+    public IQueryable<DealEntity> GetByODataAsync(
+        [FromServices] ODataSampleDbContext oDataSampleDbContext,
+        CancellationToken ct = default)
+    {
+        return oDataSampleDbContext.Set<DealEntity>()
+            .Include(x => x.Market);
     }
 }
 
@@ -42,7 +53,7 @@ public class ODataResultDto<TDto, TEntity>
 
         var data = new List<TEntity>((IQueryable<TEntity>)oDataOptions.ApplyTo(dataSet));
         Data = mapper.Map<List<TDto>>(data);
-        if (oDataOptions.Count.Value)
+        if (oDataOptions.Count is { Value: true })
         {
             ODataCount = dataSet.Count();
         }

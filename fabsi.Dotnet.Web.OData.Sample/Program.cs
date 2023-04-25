@@ -4,13 +4,20 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.OData;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using System.Reflection;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers()
+    .AddOData(options =>
+    {
+        options.EnableQueryFeatures(10);
+        options.AddRouteComponents("odata", EdmModelBuilder.BuildEdmModel());
+    })
+    .AddNewtonsoftJson();
 builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 
 builder.Services.AddCors(x =>
@@ -34,3 +41,16 @@ var app = builder.Build();
 app.ConfigureMiddlewareOrder();
 
 app.Run();
+
+
+internal class EdmModelBuilder
+{
+    public static IEdmModel BuildEdmModel()
+    {
+        var modelBuilder = new ODataConventionModelBuilder();
+
+        modelBuilder.EntitySet<DealEntity>("Deals");
+
+        return modelBuilder.GetEdmModel();
+    }
+}

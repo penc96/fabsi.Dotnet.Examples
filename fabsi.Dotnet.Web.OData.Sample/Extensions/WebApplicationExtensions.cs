@@ -1,4 +1,5 @@
 ﻿using fabsi.Dotnet.Web.OData.Sample.Entities;
+using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 
 namespace fabsi.Dotnet.Web.OData.Sample.Extensions;
@@ -8,6 +9,8 @@ public static class WebApplicationExtensions
     public static WebApplication ConfigureMiddlewareOrder(this WebApplication webApp)
     {
         webApp.UseCors();
+
+        webApp.UseODataQueryRequest();
 
         webApp.UseDatabaseMigration();
 
