@@ -16,7 +16,7 @@ namespace fabsi.Dotnet.Web.OData.Sample.Controllers;
 [ODataRouteComponent()]
 public class DealsODataController : ODataController
 {
-    [HttpGet("/api/deals/odata/edmeverytime")]
+    [HttpGet("/api/odata/deals/edmeverytime")]
     public async Task<ActionResult<ODataResultDto<DealDto, DealEntity>>> GetByODataAsync(
         [FromServices] IMapper mapper,
         [FromServices] ODataSampleDbContext oDataSampleDbContext,
